@@ -23,11 +23,20 @@ public class BoardUpdateService {
                 .orElseThrow(NotExistBoardException::new);
 
         board.update(
-             req.title(),
-             req.content(),
-             req.userId()
+                req.title(),
+                req.content(),
+                req.userId()
         );
 
         boardRepository.save(board);
+    }
+
+    @Transactional
+    public void increaseViewCount(Integer boardSeq) {
+        Board board = boardRepository.findBySeq(boardSeq);
+
+        if (board == null) return;
+
+        board.increaseViewCount();
     }
 }

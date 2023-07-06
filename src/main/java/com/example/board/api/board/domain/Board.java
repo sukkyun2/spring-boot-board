@@ -8,16 +8,19 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Getter
 @Entity
 @Table(name = "BOARD")
 @NoArgsConstructor
 @AllArgsConstructor
+@DynamicUpdate
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +36,8 @@ public class Board {
     @Enumerated(EnumType.STRING)
     @Column(name = "BOARD_STATUS")
     private BoardStatus boardStatus;
+    @Column(name = "VIEW_COUNT")
+    private Integer viewCount;
     @Embedded
     private Reg reg;
     @Embedded
@@ -56,6 +61,11 @@ public class Board {
     public void delete(Integer userId){
         this.boardStatus = BoardStatus.DELETED;
         this.upd = Upd.of(userId);
+    }
+
+    public void increaseViewCount(){
+        Integer viewCount = Optional.ofNullable(this.viewCount).orElse(0);
+        this.viewCount = ++viewCount;
     }
 
     public boolean isNotDeleted(){

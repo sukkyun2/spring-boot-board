@@ -1,6 +1,7 @@
 package com.example.board.api.board.query;
 
 import com.example.board.api.board.domain.Board;
+import com.example.board.api.board.domain.like.LikeSummary;
 import com.example.board.api.board.query.comment.CommentQueryResponse;
 import com.example.board.api.common.domain.Upd;
 import com.example.board.api.user.domain.User;
@@ -15,6 +16,9 @@ public record BoardQueryResponse(
         String title,
         String content,
         List<CommentQueryResponse> comments,
+        Integer likeCount,
+        Integer unlikeCount,
+        Integer viewCount,
         Integer regId,
         String regUserName,
         LocalDateTime regDate,
@@ -23,14 +27,18 @@ public record BoardQueryResponse(
         LocalDateTime updDate
 ) {
     @Builder
-    public BoardQueryResponse {}
+    public BoardQueryResponse {
+    }
 
-    public static BoardQueryResponse of(Board board, User reg, Optional<User> updOpt, List<CommentQueryResponse> comments) {
+    public static BoardQueryResponse of(Board board, User reg, Optional<User> updOpt, List<CommentQueryResponse> comments, LikeSummary likeSummary) {
         return BoardQueryResponse.builder()
                 .seq(board.getSeq())
                 .title(board.getTitle())
                 .content(board.getContent())
                 .comments(comments)
+                .likeCount(likeSummary.getLikeCount())
+                .unlikeCount(likeSummary.getUnlikeCount())
+                .viewCount(board.getViewCount())
                 .regId(board.getReg().getId())
                 .regDate(board.getReg().getDt())
                 .regUserName(reg.name())

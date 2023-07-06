@@ -4,8 +4,10 @@ import com.example.board.api.board.app.NotExistBoardException;
 import com.example.board.api.board.domain.Board;
 import com.example.board.api.board.domain.BoardRepository;
 import com.example.board.api.board.domain.BoardStatus;
+import com.example.board.api.board.domain.like.LikeSummary;
 import com.example.board.api.board.query.comment.CommentQueryResponse;
 import com.example.board.api.board.query.comment.CommentQueryService;
+import com.example.board.api.board.query.like.LikeSummaryQueryService;
 import com.example.board.api.common.domain.Upd;
 import com.example.board.api.user.app.UserQueryService;
 import com.example.board.api.user.domain.User;
@@ -23,6 +25,7 @@ public class BoardQueryService {
     private final BoardRepository boardRepository;
     private final UserQueryService userQueryService;
     private final CommentQueryService commentQueryService;
+    private final LikeSummaryQueryService likeSummaryQueryService;
 
     public BoardQueryResponse getBoard(Integer seq) {
         return ofNullable(this.findBySeq(seq))
@@ -30,15 +33,17 @@ public class BoardQueryService {
                 .orElseThrow(NotExistBoardException::new);
     }
 
-    private BoardQueryResponse getBoardInternal(Board board){
+    private BoardQueryResponse getBoardInternal(Board board) {
         User reg = userQueryService.getUserByUserId(board.getReg().getId());
         Optional<User> upd = board.getUpdOpt().map(Upd::getId).map(userQueryService::getUserByUserId);
-        List<CommentQueryResponse> comments = commentQueryService.getCommentsByBoardSeq(board.getSeq());
 
-        return BoardQueryResponse.of(board, reg, upd, comments);
+        List<CommentQueryResponse> comments = commentQueryService.getCommentsByBoardSeq(board.getSeq());
+        LikeSummary likeSummary = likeSummaryQueryService.summarizingLike(board.getSeq());
+
+        return BoardQueryResponse.of(board, reg, upd, comments, likeSummary);
     }
 
-    private Board findBySeq(Integer seq){
+    private Board findBySeq(Integer seq) {
         return boardRepository.findBySeqAndBoardStatus(seq, BoardStatus.NOT_DELETED);
     }
 }

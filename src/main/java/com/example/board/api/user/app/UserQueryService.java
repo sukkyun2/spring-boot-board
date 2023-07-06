@@ -23,5 +23,4 @@ public class UserQueryService {
         return getUserByUserIds(userIds).stream()
                 .collect(Collectors.toMap(User::id, Function.identity()));
     }
-
 }

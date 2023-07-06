@@ -15,6 +15,7 @@ public class BoardExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiResponse<Void> exceptionHandler(Exception e){
         log.error(e.getMessage());
+        e.printStackTrace();
 
         return ApiResponse.error(e.getMessage());
     }
