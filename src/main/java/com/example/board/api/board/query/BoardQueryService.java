@@ -37,10 +37,9 @@ public class BoardQueryService {
         User reg = userQueryService.getUserByUserId(board.getReg().getId());
         Optional<User> upd = board.getUpdOpt().map(Upd::getId).map(userQueryService::getUserByUserId);
 
-        List<CommentQueryResponse> comments = commentQueryService.getCommentsByBoardSeq(board.getSeq());
         LikeSummary likeSummary = likeSummaryQueryService.summarizingLike(board.getSeq());
 
-        return BoardQueryResponse.of(board, reg, upd, comments, likeSummary);
+        return BoardQueryResponse.of(board, reg, upd, likeSummary);
     }
 
     private Board findBySeq(Integer seq) {

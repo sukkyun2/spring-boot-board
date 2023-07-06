@@ -2,20 +2,17 @@ package com.example.board.api.board.query;
 
 import com.example.board.api.board.domain.Board;
 import com.example.board.api.board.domain.like.LikeSummary;
-import com.example.board.api.board.query.comment.CommentQueryResponse;
 import com.example.board.api.common.domain.Upd;
 import com.example.board.api.user.domain.User;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 public record BoardQueryResponse(
         Integer seq,
         String title,
         String content,
-        List<CommentQueryResponse> comments,
         Integer likeCount,
         Integer unlikeCount,
         Integer viewCount,
@@ -30,12 +27,11 @@ public record BoardQueryResponse(
     public BoardQueryResponse {
     }
 
-    public static BoardQueryResponse of(Board board, User reg, Optional<User> updOpt, List<CommentQueryResponse> comments, LikeSummary likeSummary) {
+    public static BoardQueryResponse of(Board board, User reg, Optional<User> updOpt, LikeSummary likeSummary) {
         return BoardQueryResponse.builder()
                 .seq(board.getSeq())
                 .title(board.getTitle())
                 .content(board.getContent())
-                .comments(comments)
                 .likeCount(likeSummary.getLikeCount())
                 .unlikeCount(likeSummary.getUnlikeCount())
                 .viewCount(board.getViewCount())
