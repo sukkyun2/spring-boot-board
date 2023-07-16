@@ -17,6 +17,10 @@ public record ApiResponse<T>(
         return new ApiResponse<>("400", message, null);
     }
 
+    public static ApiResponse<Void> badRequest(){
+        return new ApiResponse<>("400", null, null);
+    }
+
     public static ApiResponse<Void> unauthorized(){
         return new ApiResponse<>("401", "unauthorized", null);
     }

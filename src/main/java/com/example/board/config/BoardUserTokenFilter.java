@@ -20,11 +20,15 @@ public class BoardUserTokenFilter extends OncePerRequestFilter {
         if (user == null) {
             log.error("illegal access");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+
+            return;
         }
 
         if (user.isExpired()) {
             log.error("token expired");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+
+            return;
         }
 
         doFilter(request, response, filterChain);
