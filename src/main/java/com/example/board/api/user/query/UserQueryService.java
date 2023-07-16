@@ -1,4 +1,4 @@
-package com.example.board.api.user.app;
+package com.example.board.api.user.query;
 
 import com.example.board.api.user.domain.User;
 import org.springframework.stereotype.Service;
@@ -21,6 +21,6 @@ public class UserQueryService {
 
     public Map<Integer, User> getUserMapByUserIds(List<Integer> userIds){
         return getUserByUserIds(userIds).stream()
-                .collect(Collectors.toMap(User::id, Function.identity()));
+                .collect(Collectors.toMap(User::getId, Function.identity()));
     }
 }

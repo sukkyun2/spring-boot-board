@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;
@@ -23,6 +25,13 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins(corsConfig.getAllowOrigins())
                 .allowedMethods(corsConfig.getAllowMethods());
+    }
+
+    @Bean
+    public FilterRegistrationBean<BoardUserTokenFilter> boardUserTokenFilterFilterRegistrationBean(){
+        FilterRegistrationBean<BoardUserTokenFilter> filterRegistrationBean = new FilterRegistrationBean<>(new BoardUserTokenFilter());
+        filterRegistrationBean.addUrlPatterns("/api/*");
+        return filterRegistrationBean;
     }
 
     @Component

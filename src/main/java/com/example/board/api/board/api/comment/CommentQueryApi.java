@@ -15,7 +15,7 @@ import java.util.List;
 public class CommentQueryApi {
     private final CommentQueryService commentQueryService;
 
-    @GetMapping("/board/{boardSeq}/comments")
+    @GetMapping("/api/board/{boardSeq}/comments")
     public ApiResponse<List<CommentQueryResponse>> getComments(@PathVariable Integer boardSeq){
         return ApiResponse.ok(commentQueryService.getCommentsByBoardSeq(boardSeq));
     }

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommentCreateApi {
     private final CommentCreateService commentCreateService;
 
-    @PostMapping("/board/{boardSeq}/comments")
+    @PostMapping("/api/board/{boardSeq}/comments")
     public ApiResponse<Void> addComment(@PathVariable String boardSeq,
                                         @RequestBody CommentCreateRequest req){
         try  {

@@ -6,7 +6,7 @@ import com.example.board.api.board.domain.BoardRepository;
 import com.example.board.api.board.domain.comment.Comment;
 import com.example.board.api.board.domain.comment.CommentRepository;
 import com.example.board.api.common.domain.Reg;
-import com.example.board.api.user.app.UserQueryService;
+import com.example.board.api.user.query.UserQueryService;
 import com.example.board.api.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

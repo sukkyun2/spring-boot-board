@@ -29,7 +29,7 @@ public record CommentQueryResponse(
             return CommentResponse.builder()
                     .commentId(comment.getId())
                     .content(comment.getContent())
-                    .regUserName(reg.name())
+                    .regUserName(reg.getName())
                     .regDate(comment.getReg().getDt())
                     .build();
         }

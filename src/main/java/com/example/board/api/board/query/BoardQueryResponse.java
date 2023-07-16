@@ -37,10 +37,10 @@ public record BoardQueryResponse(
                 .viewCount(board.getViewCount())
                 .regId(board.getReg().getId())
                 .regDate(board.getReg().getDt())
-                .regUserName(reg.name())
+                .regUserName(reg.getName())
                 .updId(board.getUpdOpt().map(Upd::getId).orElse(null))
                 .updDate(board.getUpdOpt().map(Upd::getDt).orElse(null))
-                .updUserName(updOpt.map(User::name).orElse(null))
+                .updUserName(updOpt.map(User::getName).orElse(null))
                 .build();
     }
 }

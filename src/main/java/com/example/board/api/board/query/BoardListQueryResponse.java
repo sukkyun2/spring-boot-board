@@ -24,7 +24,7 @@ public class BoardListQueryResponse {
                 board.getSeq(),
                 board.getTitle(),
                 board.getReg().getId(),
-                user.name(),
+                user.getName(),
                 board.getReg().getDt(),
                 board.getViewCount());
     }

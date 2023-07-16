@@ -2,9 +2,8 @@ package com.example.board.api.board.query;
 
 import com.example.board.api.board.domain.Board;
 import com.example.board.api.board.domain.BoardRepository;
-import com.example.board.api.board.domain.BoardStatus;
 import com.example.board.api.common.domain.Reg;
-import com.example.board.api.user.app.UserQueryService;
+import com.example.board.api.user.query.UserQueryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 class BoardListQueryServiceTest {

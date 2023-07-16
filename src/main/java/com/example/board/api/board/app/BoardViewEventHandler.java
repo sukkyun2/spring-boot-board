@@ -6,11 +6,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class BoardViewCounter {
+public class BoardViewEventHandler {
     private final BoardUpdateService boardUpdateService;
 
     @EventListener
-    public void increaseViewCount(Integer boardSeq) {
-        boardUpdateService.increaseViewCount(boardSeq);
+    public void increaseViewCount(BoardViewEvent event) {
+        boardUpdateService.increaseViewCount(event.boardSeq());
     }
 }

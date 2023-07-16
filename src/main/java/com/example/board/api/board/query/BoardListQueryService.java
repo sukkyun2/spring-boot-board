@@ -3,7 +3,7 @@ package com.example.board.api.board.query;
 import com.example.board.api.board.domain.Board;
 import com.example.board.api.board.domain.BoardRepository;
 import com.example.board.api.board.domain.BoardStatus;
-import com.example.board.api.user.app.UserQueryService;
+import com.example.board.api.user.query.UserQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

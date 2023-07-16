@@ -16,7 +16,7 @@ import java.util.List;
 public class BoardListQueryApi {
     private final BoardListQueryService boardListQueryService;
 
-    @GetMapping("/board")
+    @GetMapping("/api/board")
     public ApiResponse<List<BoardListQueryResponse>> getBoardList(@RequestParam(required = false, defaultValue = "0") Integer offset,
                                                                   @RequestParam(required = false, defaultValue = "10") Integer limit) {
         return ApiResponse.ok(

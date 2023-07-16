@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class BoardDeleteApi {
     private final BoardDeleteService boardDeleteService;
 
-    @DeleteMapping("/board/{boardSeq}")
+    @DeleteMapping("/api/board/{boardSeq}")
     public ApiResponse<Void> deleteBoard(@PathVariable Integer boardSeq,
                                          @RequestBody BoardDeleteRequest req) {
         try {

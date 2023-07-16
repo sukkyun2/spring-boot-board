@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LikeAddApi {
     private final LikeAddService likeAddService;
 
-    @PostMapping("/board/{boardSeq}/likes")
+    @PostMapping("/api/board/{boardSeq}/likes")
     public ApiResponse<Void> addComment(@PathVariable Integer boardSeq,
                                         @RequestBody LikeAddRequest req) {
         try {

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BoardUpdateApi {
     private final BoardUpdateService boardUpdateService;
 
-    @PutMapping("/board/{boardSeq}")
+    @PutMapping("/api/board/{boardSeq}")
     public ApiResponse<Void> updateBoard(@PathVariable Integer boardSeq,
                                          @RequestBody BoardUpdateRequest req) {
         try {

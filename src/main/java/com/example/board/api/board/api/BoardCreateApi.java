@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BoardCreateApi {
     private final BoardCreateService boardCreateService;
 
-    @PostMapping("/board")
+    @PostMapping("/api/board")
     public ApiResponse<Void> createBoard(@RequestBody BoardCreateRequest req){
         try  {
             boardCreateService.createBoard(req);

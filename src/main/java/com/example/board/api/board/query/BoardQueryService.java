@@ -5,16 +5,14 @@ import com.example.board.api.board.domain.Board;
 import com.example.board.api.board.domain.BoardRepository;
 import com.example.board.api.board.domain.BoardStatus;
 import com.example.board.api.board.domain.like.LikeSummary;
-import com.example.board.api.board.query.comment.CommentQueryResponse;
 import com.example.board.api.board.query.comment.CommentQueryService;
 import com.example.board.api.board.query.like.LikeSummaryQueryService;
 import com.example.board.api.common.domain.Upd;
-import com.example.board.api.user.app.UserQueryService;
+import com.example.board.api.user.query.UserQueryService;
 import com.example.board.api.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 import static java.util.Optional.ofNullable;
