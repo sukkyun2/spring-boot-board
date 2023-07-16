@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:p6spy:h2:mem:test;MODE=MySQL
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    username: sa
+    password: ""
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+logging:
+  level:
+    p6spy: info
+
+decorator:
+  datasource:
+    p6spy:
+      multiline: true
+
+cors:
+  allow-methods : ['GET', 'POST', 'PUT', 'DELETE']
+  allow-origins : ['http://localhost:3000']

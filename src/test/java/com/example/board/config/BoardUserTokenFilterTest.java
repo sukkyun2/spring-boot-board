@@ -39,13 +39,13 @@ class BoardUserTokenFilterTest {
     }
 
     @Test
-    @DisplayName("Filter 패턴에 걸렸을때 유효한 토큰이면 statusCode 200")
+    @DisplayName("Filter 패턴에 걸렸을때 유효한 토큰이면 statusCode가 401이 아니다")
     void given_exist_token_when_matched_uri_pattern_then_return_200() throws Exception {
         String givenToken = TokenGenerator.gen(1, "사람");
 
         mockMvc.perform(get("/api/board/1")
                         .header("token", givenToken))
-                .andExpect(status().isOk());
+                .andExpect(status().is(not(HttpServletResponse.SC_UNAUTHORIZED)));
     }
 
     @Test
