@@ -7,6 +7,10 @@ import com.example.board.api.user.query.UserQueryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
@@ -15,15 +19,17 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@ExtendWith(MockitoExtension.class)
 class BoardListQueryServiceTest {
-
-    private BoardListQueryService boardListQueryService;
+    @Mock
+    private UserQueryService userQueryService;
     @Autowired
     private BoardRepository boardRepository;
+    private BoardListQueryService boardListQueryService;
 
     @BeforeEach
     void setUp() {
-        boardListQueryService = new BoardListQueryService(boardRepository, new UserQueryService());
+        boardListQueryService = new BoardListQueryService(boardRepository, userQueryService);
     }
 
     @Test
