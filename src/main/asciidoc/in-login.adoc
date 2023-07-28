@@ -1,0 +1,15 @@
+= 회원 API Guide
+
+== 로그인 API
+
+operation::login[snippets='http-request,query-parameters,response-body,response-fields']
+
+== Custom Error
+로그인에 실패 했을경우
+
+operation::login-fail[snippets='http-response,response-body']
+
+
+
+
+

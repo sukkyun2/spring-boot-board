@@ -1,17 +1,15 @@
-package com.example.board.doc.board.api;
+package com.example.board.doc.board;
 
 import com.example.board.api.auth.query.TokenGenerator;
 import com.example.board.api.board.api.BoardListQueryApi;
 import com.example.board.api.board.domain.Board;
 import com.example.board.api.board.domain.BoardStatus;
-import com.example.board.api.board.query.BoardListQueryRequest;
 import com.example.board.api.board.query.BoardListQueryResponse;
 import com.example.board.api.board.query.BoardListQueryService;
 import com.example.board.api.common.domain.Reg;
 import com.example.board.api.user.domain.User;
 import com.example.board.config.BoardUserTokenFilter;
 import jakarta.servlet.http.Cookie;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,22 +19,19 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
-import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
 import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.JsonFieldType.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -56,7 +51,9 @@ class BoardListQueryApiDoc {
     @BeforeEach
     void setUp(RestDocumentationContextProvider restDocumentation) {
         this.mockMvc = MockMvcBuilders.standaloneSetup(boardListQueryApi)
-                .addFilter(new BoardUserTokenFilter())
+                .addFilters(
+                        new CharacterEncodingFilter("UTF-8", true),
+                        new BoardUserTokenFilter())
                 .apply(documentationConfiguration(restDocumentation)
                         .operationPreprocessors()
                         .withResponseDefaults(prettyPrint()))

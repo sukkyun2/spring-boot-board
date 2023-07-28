@@ -16,6 +16,6 @@ public class LoginService {
         return Optional.ofNullable(userRepository.findByLoginIdAndPassword(req.loginId(), req.password()))
                 .map(TokenGenerator::gen)
                 .map(LoginResponse::new)
-                .orElseThrow(NotExistUserException::new);
+                .orElseThrow(FailedLoginException::new);
     }
 }

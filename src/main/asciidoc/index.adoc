@@ -1,0 +1,13 @@
+= 게시판 API Guide
+
+[[login]]
+== LOGIN API
+로그인 API 관련 문서입니다 +
+
+link:in-login.html[페이지]
+
+[[board]]
+== BOARD API
+게시판 API 관련 문서입니다 +
+
+link:in-board-list.html[페이지]
