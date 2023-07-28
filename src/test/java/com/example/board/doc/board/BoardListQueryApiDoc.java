@@ -9,6 +9,7 @@ import com.example.board.api.board.query.BoardListQueryService;
 import com.example.board.api.common.domain.Reg;
 import com.example.board.api.user.domain.User;
 import com.example.board.config.BoardUserTokenFilter;
+import com.example.board.doc.ApiDocBase;
 import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,10 +20,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
+import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -40,24 +43,15 @@ import static org.springframework.restdocs.request.RequestDocumentation.paramete
 import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith({RestDocumentationExtension.class, MockitoExtension.class})
-class BoardListQueryApiDoc {
-    private MockMvc mockMvc;
+class BoardListQueryApiDoc extends ApiDocBase {
     @Mock
     private BoardListQueryService boardListQueryService;
     @InjectMocks
     private BoardListQueryApi boardListQueryApi;
 
-    @BeforeEach
-    void setUp(RestDocumentationContextProvider restDocumentation) {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(boardListQueryApi)
-                .addFilters(
-                        new CharacterEncodingFilter("UTF-8", true),
-                        new BoardUserTokenFilter())
-                .apply(documentationConfiguration(restDocumentation)
-                        .operationPreprocessors()
-                        .withResponseDefaults(prettyPrint()))
-                .build();
+    @Override
+    public Object getApi() {
+        return boardListQueryApi;
     }
 
     @Test
@@ -76,17 +70,15 @@ class BoardListQueryApiDoc {
                                 parameterWithName("offset").description("페이지 번호"),
                                 parameterWithName("limit").description("페이지 당 개수|default 10")
                         ),
-                        responseFields(
-                                fieldWithPath("code").type(STRING).description("결과 코드"),
-                                fieldWithPath("message").type(STRING).description("결과 메시지"),
-                                fieldWithPath("data").type(ARRAY).description("데이터"),
-                                fieldWithPath("data[].seq").type(NUMBER).description("게시판 고유 ID"),
-                                fieldWithPath("data[].title").type(STRING).description("게시판 제목"),
-                                fieldWithPath("data[].regUserId").type(NUMBER).description("등록자 ID"),
-                                fieldWithPath("data[].regUserName").type(STRING).description("등록자 명"),
-                                fieldWithPath("data[].createdAt").type(STRING).description("게시판 생성일"),
-                                fieldWithPath("data[].viewCount").type(NUMBER).description("조회수")
-                        )));
+                        responseFields(apiArrayResponseFieldDescriptor())
+                                .andWithPrefix("data[].",
+                                        fieldWithPath("seq").type(NUMBER).description("게시판 고유 ID"),
+                                        fieldWithPath("title").type(STRING).description("게시판 제목"),
+                                        fieldWithPath("regUserId").type(NUMBER).description("등록자 ID"),
+                                        fieldWithPath("regUserName").type(STRING).description("등록자 명"),
+                                        fieldWithPath("createdAt").type(STRING).description("게시판 생성일"),
+                                        fieldWithPath("viewCount").type(NUMBER).description("조회수"))
+                ));
     }
 
     private void givenBoardList() {
