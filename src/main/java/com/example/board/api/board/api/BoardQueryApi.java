@@ -1,7 +1,6 @@
 package com.example.board.api.board.api;
 
-import com.example.board.api.board.app.BoardViewEvent;
-import com.example.board.api.board.app.BoardViewEventHandler;
+import com.example.board.api.board.infra.event.BoardViewEvent;
 import com.example.board.api.board.app.NotExistBoardException;
 import com.example.board.api.board.query.BoardQueryResponse;
 import com.example.board.api.board.query.BoardQueryService;

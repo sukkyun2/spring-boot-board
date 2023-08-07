@@ -14,11 +14,11 @@ public class BoardCreateService {
     private final BoardCreateValidator validator = new BoardCreateValidator();
 
     @Transactional
-    public void createBoard(BoardCreateRequest req) {
+    public Board createBoard(BoardCreateRequest req) {
         validator.validate(req);
         Board board = convert(req);
 
-        boardRepository.save(board);
+        return boardRepository.save(board);
     }
 
     private Board convert(BoardCreateRequest req) {
