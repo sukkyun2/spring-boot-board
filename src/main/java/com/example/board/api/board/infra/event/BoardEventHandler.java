@@ -1,8 +1,7 @@
 package com.example.board.api.board.infra.event;
 
 import com.example.board.api.board.app.BoardUpdateService;
-import com.example.board.api.board.domain.Board;
-import com.example.board.api.board.infra.ChatGPTCommentService;
+import com.example.board.api.board.app.comment.AutoCommentAddService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class BoardEventHandler {
     private final BoardUpdateService boardUpdateService;
-    private final ChatGPTCommentService chatGPTCommentService;
+    private final AutoCommentAddService autoCommentAddService;
 
     @EventListener
     public void increaseViewCount(BoardViewEvent event) {
@@ -20,6 +19,6 @@ public class BoardEventHandler {
 
     @EventListener
     public void addComment(BoardCreateEvent event) {
-        chatGPTCommentService.addComment(event.board());
+        autoCommentAddService.addComment(event.board());
     }
 }

@@ -1,6 +1,5 @@
 package com.example.board.api.board.infra.event;
 
-public record BoardViewEvent(
-        Integer boardSeq
-) {
-}
+
+
+public record BoardViewEvent(Integer boardSeq) { }

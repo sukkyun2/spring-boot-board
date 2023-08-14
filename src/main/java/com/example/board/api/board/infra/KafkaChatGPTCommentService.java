@@ -1,31 +1,28 @@
 package com.example.board.api.board.infra;
 
+import com.example.board.api.board.app.comment.AutoCommentAddService;
 import com.example.board.api.board.domain.Board;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.json.JSONObject;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
-public class KafkaChatGPTCommentService implements ChatGPTCommentService {
+public class KafkaChatGPTCommentService implements AutoCommentAddService {
     private static final String TOPIC = "chatgpt";
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, ChatGPTCommentPayload> kafkaTemplate;
 
     @Override
-    @SneakyThrows
     public void addComment(Board board) {
-        JSONObject msgData = new JSONObject();
-        msgData.put("seq", board.getSeq());
-        msgData.put("title", board.getTitle());
-        msgData.put("content", board.getContent());
+        Optional.of(board).map(this::createRecord).ifPresent(kafkaTemplate::send);
+    }
 
-        JSONObject msgObj = new JSONObject();
-        msgObj.put("command", "request_chatgpt");
-        msgObj.put("data", msgData);
-
-        String msg = msgObj.toString(4);
-        kafkaTemplate.send(TOPIC, msg);
+    private ProducerRecord<String, ChatGPTCommentPayload> createRecord(Board board) {
+        return new ProducerRecord<>(TOPIC, new ChatGPTCommentPayload(board));
     }
 }

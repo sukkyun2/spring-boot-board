@@ -8,6 +8,12 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
+  kafka:
+    producer:
+      bootstrap-servers:
+        - localhost:29092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: com.example.board.api.board.infra.ChatGPTCommentPayloadSerializer
 logging:
   level:
     p6spy: info

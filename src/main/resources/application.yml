@@ -18,7 +18,7 @@ spring:
       bootstrap-servers:
         - localhost:29092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: com.example.board.api.board.infra.ChatGPTCommentPayloadSerializer
 logging:
   level:
     p6spy: info
