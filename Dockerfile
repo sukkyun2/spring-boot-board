@@ -3,6 +3,7 @@ WORKDIR /workspace/app
 
 COPY . .
 
+RUN chmod 777 ./mvnw
 RUN ./mvnw clean package
 RUN java -Djarmode=layertools -jar target/board-0.0.6.jar extract --destination target/extracted
 RUN mkdir -p target/extracted && (cd target/extracted; jar -xf ../board-0.0.6.jar)
