@@ -8,8 +8,6 @@ env:
   DOCKER_IMAGE: ghcr.io/${{ github.actor }}/sbb
   VERSION: ${{ github.sha }}
   CONTAINER_NAME: board
-  # Docker image 를 ghcr.io 에 올릴 때 우리의github이름/이미지이름 으로 저장한다. 이미지이름을 정해주면 된다.
-  # Docker 컨테이너 의 이름을 sbb 이라고 해놓은 것. 이름은 본인 임의로 정하면 됩니다.
 
 jobs:
   build:
@@ -54,8 +52,8 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.REMOTE_IP }}
-          username: ${{ secrets.REMOTE_SSH_ID }}
-          key: ${{ secrets.REMOTE_SSH_KEY }}
+          username: ${{ secrets.REMOTE_USER }}
+          password: ${{ secrets.REMOTE_PASSWORD }}
           port: ${{ secrets.REMOTE_SSH_PORT }}
           script: |
             whoami
@@ -65,8 +63,8 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.REMOTE_IP }}
-          username: ${{ secrets.REMOTE_SSH_ID }}
-          key: ${{ secrets.REMOTE_SSH_KEY }}
+          username: ${{ secrets.REMOTE_USER }}
+          password: ${{ secrets.REMOTE_PASSWORD }}
           port: ${{ secrets.REMOTE_SSH_PORT }}
           script: |
             whoami
