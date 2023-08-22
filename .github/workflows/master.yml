@@ -48,6 +48,18 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
+      - name: Dokcer Login
+        uses: appleboy/ssh-action@master
+        env:
+          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+        with:
+          host: ${{ secrets.REMOTE_IP }}
+          username: ${{ secrets.REMOTE_USER }}
+          password: ${{ secrets.REMOTE_PASSWORD }}
+          port: ${{ secrets.REMOTE_SSH_PORT }}
+          script: |
+            whoami
+            docker login ghcr.io --username ${{ github.repository_owner }} --password ${{ secrets.GHCR_TOKEN }}
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:
