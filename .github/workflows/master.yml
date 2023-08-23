@@ -59,7 +59,7 @@ jobs:
           port: ${{ secrets.REMOTE_SSH_PORT }}
           script: |
             whoami
-            docker login ghcr.io --username ${{ github.repository_owner }} --password ${{ secrets.GHCR_TOKEN }}
+            echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:
