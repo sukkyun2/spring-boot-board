@@ -8,24 +8,13 @@ import com.example.board.api.board.query.BoardListQueryResponse;
 import com.example.board.api.board.query.BoardListQueryService;
 import com.example.board.api.common.domain.Reg;
 import com.example.board.api.user.domain.User;
-import com.example.board.config.BoardUserTokenFilter;
 import com.example.board.doc.ApiDocBase;
 import jakarta.servlet.http.Cookie;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.restdocs.RestDocumentationContextProvider;
-import org.springframework.restdocs.RestDocumentationExtension;
-import org.springframework.restdocs.payload.FieldDescriptor;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.filter.CharacterEncodingFilter;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -33,10 +22,9 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
 import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.restdocs.payload.JsonFieldType.*;
+import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
+import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
@@ -67,16 +55,16 @@ class BoardListQueryApiDoc extends ApiDocBase {
                                 cookieWithName("token").description("토큰")
                         ),
                         queryParameters(
-                                parameterWithName("offset").description("페이지 번호"),
-                                parameterWithName("limit").description("페이지 당 개수|default 10")
+                                parameterWithName("offset").optional().description("페이지 번호"),
+                                parameterWithName("limit").optional().description("페이지 당 개수|default 10")
                         ),
                         responseFields(apiArrayResponseFieldDescriptor())
                                 .andWithPrefix("data[].",
-                                        fieldWithPath("seq").type(NUMBER).description("게시판 고유 ID"),
+                                        fieldWithPath("seq").type(NUMBER).description("게시판 고유번호"),
                                         fieldWithPath("title").type(STRING).description("게시판 제목"),
                                         fieldWithPath("regUserId").type(NUMBER).description("등록자 ID"),
                                         fieldWithPath("regUserName").type(STRING).description("등록자 명"),
-                                        fieldWithPath("createdAt").type(STRING).description("게시판 생성일"),
+                                        fieldWithPath("createdAt").type(STRING).description("게시판 등록일"),
                                         fieldWithPath("viewCount").type(NUMBER).description("조회수"))
                 ));
     }

@@ -1,4 +1,0 @@
-[[get-board-list]]
-= 게시판 목록 조회
-
-operation::get-board-list[snippets='http-request,request-cookies,query-parameters,response-body,response-fields']

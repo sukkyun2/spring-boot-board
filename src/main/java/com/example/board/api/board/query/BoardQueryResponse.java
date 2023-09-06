@@ -4,28 +4,30 @@ import com.example.board.api.board.domain.Board;
 import com.example.board.api.board.domain.like.LikeSummary;
 import com.example.board.api.common.domain.Upd;
 import com.example.board.api.user.domain.User;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-public record BoardQueryResponse(
-        Integer seq,
-        String title,
-        String content,
-        Integer likeCount,
-        Integer unlikeCount,
-        Integer viewCount,
-        Integer regId,
-        String regUserName,
-        LocalDateTime regDate,
-        Integer updId,
-        String updUserName,
-        LocalDateTime updDate
-) {
-    @Builder
-    public BoardQueryResponse {
-    }
+@Getter
+@Builder
+public class BoardQueryResponse {
+    private Integer seq;
+    private String title;
+    private String content;
+    private Integer likeCount;
+    private Integer unlikeCount;
+    private Integer viewCount;
+    private Integer regId;
+    private String regUserName;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime regDate;
+    private Integer updId;
+    private String updUserName;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updDate;
 
     public static BoardQueryResponse of(Board board, User reg, Optional<User> updOpt, LikeSummary likeSummary) {
         return BoardQueryResponse.builder()

@@ -1,4 +1,4 @@
-= 회원 API Guide
+= link:/docs/index.html[로그인 API Guide]
 
 == 로그인 API
 
