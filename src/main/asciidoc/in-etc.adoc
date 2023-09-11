@@ -1,0 +1,25 @@
+= link:/docs/index.html[댓글 및 좋아요 API Guide]
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels:
+:sectlinks:
+
+== 댓글 조회 API
+
+operation::get-comment-list[snippets='http-request,path-parameters,response-body,response-fields']
+
+== 댓글 등록 API
+
+operation::create-comment[snippets='http-request,request-body,request-fields,response-body,response-fields']
+
+== 좋아요/싫어요 등록 API
+
+operation::add-like[snippets='http-request,request-body,request-fields,response-body,response-fields']
+
+
+
+
+
+

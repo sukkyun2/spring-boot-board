@@ -1,13 +1,19 @@
 = 게시판 API 가이드 문서
 
 [[login]]
-== LOGIN API
+== LOGIN
 로그인 API 관련 문서입니다 +
 
 link:in-login.html[페이지]
 
 [[board]]
-== BOARD API
+== BOARD
 게시판 API 관련 문서입니다 +
 
 link:in-board.html[페이지]
+
+[[ETC]]
+== ETC
+댓글 및 좋아요 API 관련 문서입니다 +
+
+link:in-etc.html[페이지]

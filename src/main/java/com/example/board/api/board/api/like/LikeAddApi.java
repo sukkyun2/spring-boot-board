@@ -16,7 +16,7 @@ public class LikeAddApi {
     private final LikeAddService likeAddService;
 
     @PostMapping("/api/board/{boardSeq}/likes")
-    public ApiResponse<Void> addComment(@PathVariable Integer boardSeq,
+    public ApiResponse<Void> addLike(@PathVariable Integer boardSeq,
                                         @RequestBody LikeAddRequest req) {
         try {
             likeAddService.addLike(req);
