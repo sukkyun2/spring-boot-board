@@ -6,7 +6,8 @@ import org.springframework.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.board.api.board.app.BoardValidateMessage.*;
+import static com.example.board.api.board.app.BoardValidateMessage.ERROR_MSG_CONTENT_IS_EMPTY;
+import static com.example.board.api.board.app.BoardValidateMessage.ERROR_MSG_TITLE_IS_EMPTY;
 
 public class BoardCreateValidator {
     public void validate(BoardCreateRequest req) {
@@ -20,11 +21,7 @@ public class BoardCreateValidator {
             errors.add(ERROR_MSG_CONTENT_IS_EMPTY);
         }
 
-        if (req.userId() == null) {
-            errors.add(ERROR_MSG_USER_ID_IS_NULL);
-        }
-
-        if (!errors.isEmpty()){
+        if (!errors.isEmpty()) {
             throw new ValidationException(errors.get(0));
         }
     }

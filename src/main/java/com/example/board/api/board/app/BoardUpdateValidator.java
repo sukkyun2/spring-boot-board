@@ -24,10 +24,6 @@ public class BoardUpdateValidator {
             errors.add(ERROR_MSG_CONTENT_IS_EMPTY);
         }
 
-        if (req.userId() == null) {
-            errors.add(ERROR_MSG_USER_ID_IS_NULL);
-        }
-
         if(!errors.isEmpty()){
             throw new ValidationException(errors.get(0));
         }

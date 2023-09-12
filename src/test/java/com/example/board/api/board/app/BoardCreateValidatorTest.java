@@ -20,7 +20,7 @@ class BoardCreateValidatorTest {
     @Test
     @DisplayName("게시글 제목은 1글자 이상이어야 한다")
     void given_empty_title_then_throw_exception() {
-        BoardCreateRequest givenEmptyTitleReq = BoardCreateRequest.builder().title("").build();
+        BoardCreateRequest givenEmptyTitleReq = new BoardCreateRequest("","내용");
 
         assertThrows(
                 ValidationException.class,
@@ -30,9 +30,9 @@ class BoardCreateValidatorTest {
     }
 
     @Test
-    @DisplayName("게시글 제목은 1글자 이상이어야 한다")
+    @DisplayName("게시글 내용은 1글자 이상이어야 한다")
     void given_empty_content_then_throw_exception() {
-        BoardCreateRequest givenEmptyContentReq = BoardCreateRequest.builder().title("제목").content(null).build();
+        BoardCreateRequest givenEmptyContentReq = new BoardCreateRequest("제목","");
 
         assertThrows(
                 ValidationException.class,
@@ -40,17 +40,4 @@ class BoardCreateValidatorTest {
                 ERROR_MSG_CONTENT_IS_EMPTY
         );
     }
-
-    @Test
-    @DisplayName("게시글 생성시 작성자 정보가 필요하다")
-    void given_user_id_null_then_throw_exception() {
-        BoardCreateRequest givenUserIdIsNullReq = BoardCreateRequest.builder().title("제목").content("내용").userId(null).build();
-
-        assertThrows(
-                ValidationException.class,
-                () -> validator.validate(givenUserIdIsNullReq),
-                ERROR_MSG_USER_ID_IS_NULL
-        );
-    }
-
 }

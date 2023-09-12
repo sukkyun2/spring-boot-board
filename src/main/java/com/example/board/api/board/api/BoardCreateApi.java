@@ -6,6 +6,7 @@ import com.example.board.api.board.domain.Board;
 import com.example.board.api.board.infra.event.BoardCreateEvent;
 import com.example.board.api.common.api.ApiResponse;
 import com.example.board.api.common.app.ValidationException;
+import com.example.board.api.common.domain.BoardUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,9 +20,9 @@ public class BoardCreateApi {
     private final ApplicationEventPublisher publisher;
 
     @PostMapping("/api/board")
-    public ApiResponse<Void> createBoard(@RequestBody BoardCreateRequest req) {
+    public ApiResponse<Void> createBoard(@RequestBody BoardCreateRequest req, BoardUser boardUser) {
         try {
-            Board board = boardCreateService.createBoard(req);
+            Board board = boardCreateService.createBoard(req, boardUser);
             publisher.publishEvent(new BoardCreateEvent(board));
 
             return ApiResponse.ok();

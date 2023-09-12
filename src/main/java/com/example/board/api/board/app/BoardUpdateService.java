@@ -2,7 +2,7 @@ package com.example.board.api.board.app;
 
 import com.example.board.api.board.domain.Board;
 import com.example.board.api.board.domain.BoardRepository;
-import com.example.board.api.common.domain.Reg;
+import com.example.board.api.common.domain.BoardUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,17 +16,13 @@ public class BoardUpdateService {
     private final BoardUpdateValidator validator = new BoardUpdateValidator();
 
     @Transactional
-    public void updateBoard(BoardUpdateRequest req) {
+    public void updateBoard(BoardUpdateRequest req, BoardUser boardUser) {
         validator.validate(req);
 
         Board board = Optional.ofNullable(boardRepository.findBySeq(req.seq()))
                 .orElseThrow(NotExistBoardException::new);
 
-        board.update(
-                req.title(),
-                req.content(),
-                req.userId()
-        );
+        board.update(req.title(), req.content(), boardUser.getUserId());
 
         boardRepository.save(board);
     }
