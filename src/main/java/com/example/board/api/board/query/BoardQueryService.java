@@ -22,7 +22,6 @@ import static java.util.Optional.ofNullable;
 public class BoardQueryService {
     private final BoardRepository boardRepository;
     private final UserQueryService userQueryService;
-    private final CommentQueryService commentQueryService;
     private final LikeSummaryQueryService likeSummaryQueryService;
 
     public BoardQueryResponse getBoard(Integer seq) {
