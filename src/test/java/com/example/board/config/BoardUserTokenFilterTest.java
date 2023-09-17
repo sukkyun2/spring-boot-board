@@ -1,12 +1,15 @@
 package com.example.board.config;
 
 import com.example.board.api.auth.query.TokenGenerator;
+import com.example.board.api.board.api.BoardQueryApi;
 import com.example.board.api.board.query.BoardQueryService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
@@ -16,10 +19,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@WebMvcTest(BoardQueryService.class)
+@WebMvcTest(BoardQueryApi.class)
 class BoardUserTokenFilterTest {
     @Autowired
     private MockMvc mockMvc;
+
+    @MockBean
+    private BoardQueryService boardQueryService;
 
     @Test
     @DisplayName("Filter 패턴에 걸리지 않으면 토큰체크 X")

@@ -33,7 +33,7 @@ class LikeAddValidatorTest {
     @DisplayName("좋아요 클릭시 게시판 정보가 필요하다")
     void given_board_seq_null_then_throw_exception() {
         BoardUser boardUser = MockBoardUserProvider.getBoardUser();
-        LikeAddRequest givenReq = new LikeAddRequest(1, LikeType.LIKE);
+        LikeAddRequest givenReq = new LikeAddRequest(null, LikeType.LIKE);
 
         ValidationException ex = assertThrows(ValidationException.class, () -> validator.validate(givenReq, boardUser));
         assertThat(ex).hasMessage(ERROR_MSG_BOARD_SEQ_IS_NULL);
@@ -54,7 +54,7 @@ class LikeAddValidatorTest {
     @DisplayName("이미 좋아요를 누른 사용자는 중복하여 누를 수 없다")
     void given_user_added_like_then_dont_add_like() {
         BoardUser boardUser = MockBoardUserProvider.getBoardUser();
-        LikeAddRequest givenReq = new LikeAddRequest(1, LikeType.LIKE);
+        LikeAddRequest givenReq = new LikeAddRequest(2, LikeType.LIKE);
 
         given(boardRepository.existsBySeq(any())).willReturn(true);
         given(likeRepository.existsById(new LikeId(boardUser.getUserId(), 2))).willReturn(true);
