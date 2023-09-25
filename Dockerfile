@@ -16,6 +16,11 @@ COPY --from=build ${EXTRACTED}/spring-boot-loader/ ./
 COPY --from=build ${EXTRACTED}/snapshot-dependencies/ ./
 COPY --from=build ${EXTRACTED}/application/ ./
 
-RUN echo ${JAVA_OPTS}
+ARG PINPOINT_VERSION
+ARG AGENT_ID
+ARG APP_NAME
 
-ENTRYPOINT ["sh", "-c", "java","${JAVA_OPTS}","org.springframework.boot.loader.JarLauncher"]
+ENV JAVA_OPTS="-javaagent:/pinpoint-agent/pinpoint-bootstrap-${PINPOINT_VERSION}.jar -Dpinpoint.agentId=${AGENT_ID} -Dpinpoint.applicationName=${APP_NAME} -Dspring.profiles.active=${SPRING_PROFILES}"
+
+CMD java ${JAVA_OPTS} org.springframework.boot.loader.JarLauncher
+#ENTRYPOINT ["sh", "-c", "java","${JAVA_OPTS}","org.springframework.boot.loader.JarLauncher"]
