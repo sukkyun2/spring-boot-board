@@ -20,7 +20,7 @@ ARG PINPOINT_VERSION
 ARG AGENT_ID
 ARG APP_NAME
 
-#ENV JAVA_OPTS="-javaagent:/pinpoint-agent/pinpoint-bootstrap-${PINPOINT_VERSION}.jar -Dpinpoint.agentId=${AGENT_ID} -Dpinpoint.applicationName=${APP_NAME} -Dspring.profiles.active=${SPRING_PROFILES}"
+ENV JAVA_OPTS="-javaagent:/pinpoint-agent/pinpoint-bootstrap-${PINPOINT_VERSION}.jar -Dpinpoint.agentId=${AGENT_ID} -Dpinpoint.applicationName=${APP_NAME} -Dspring.profiles.active=${SPRING_PROFILES}"
 
-CMD java -javaagent:/pinpoint-agent/pinpoint-bootstrap-2.5.2.jar -Dpinpoint.agentId=board -Dpinpoint.applicationName=board -Dspring.profiles.active=release org.springframework.boot.loader.JarLauncher
+CMD java ${JAVA_OPTS} org.springframework.boot.loader.JarLauncher
 #ENTRYPOINT ["sh", "-c", "java","${JAVA_OPTS}","org.springframework.boot.loader.JarLauncher"]
