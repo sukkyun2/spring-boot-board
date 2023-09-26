@@ -64,7 +64,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Replacing Secret Variables in Env file
-        run: sed -i "/COLLECTOR_IP=/ s/=.*/=${{ PINPOINT_COLLECTOR_IP }}/"  deploy/docker-compose/.env
+        run: sed -i "/COLLECTOR_IP=/ s/=.*/=${{ secrets.PINPOINT_COLLECTOR_IP }}/"  deploy/docker-compose/.env
 
       - name: Copy Docker Compose And Env file
         uses: appleboy/scp-action@v0.1.4
