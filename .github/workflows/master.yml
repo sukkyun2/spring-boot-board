@@ -28,6 +28,7 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ env.VERSION }}
           restore-keys: |
             ${{ runner.os }}-buildx-
+
       - name: Login to ghcr
         uses: docker/login-action@v1
         with:
@@ -48,10 +49,8 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Dokcer Login
+      - name: Docker Login
         uses: appleboy/ssh-action@master
-        env:
-          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
         with:
           host: ${{ secrets.REMOTE_IP }}
           username: ${{ secrets.REMOTE_USER }}
@@ -60,18 +59,24 @@ jobs:
           script: |
             whoami
             echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-      - name: Deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.REMOTE_IP }}
-          username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.REMOTE_PRIVATE_KEY }}
-          port: ${{ secrets.REMOTE_SSH_PORT }}
-          script: |
-            whoami
-            docker pull ${{ env.DOCKER_IMAGE }}:latest
 
-      - name: Run
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Replacing Secret Variables in Env file
+        run: sed -i "/COLLECTOR_IP=/ s/=.*/=${{ PINPOINT_COLLECTOR_IP }}/"  deploy/docker-compose/.env
+
+      - name: Copy Docker Compose And Env file
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.REMOTE_IP }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.REMOTE_PRIVATE_KEY }}
+          port: ${{ secrets.REMOTE_SSH_PORT }}
+          source: "deploy/docker-compose/.env,deploy/docker-compose/docker-compose.yml"
+          target: /home/${{ secrets.REMOTE_USER }}/${{ env.CONTAINER_NAME }}
+
+      - name: Docker Compose Up
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.REMOTE_IP }}
@@ -79,6 +84,5 @@ jobs:
           key: ${{ secrets.REMOTE_PRIVATE_KEY }}
           port: ${{ secrets.REMOTE_SSH_PORT }}
           script: |
-            whoami
-            docker stop ${{ env.CONTAINER_NAME }} && docker rm ${{ env.CONTAINER_NAME }} && docker rmi ${{ env.DOCKER_IMAGE }}:latest
-            docker run -d -p 8081:8080 --name ${{ env.CONTAINER_NAME }} --restart always ${{ env.DOCKER_IMAGE }}:latest
+            docker-compose up --build --force-recreate -d
+
