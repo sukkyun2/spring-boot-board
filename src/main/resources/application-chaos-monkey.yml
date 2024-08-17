@@ -1,0 +1,22 @@
+chaos:
+  monkey:
+    enabled: true
+    watcher:
+      rest-controller: true
+    assaults:
+      latency-active: true
+
+management:
+  endpoint:
+    chaosmonkey:
+      enabled: true
+    chaosmonkeyjmx:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - chaosmonkey
+          - metrics
